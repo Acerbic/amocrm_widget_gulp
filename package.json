@@ -1,0 +1,19 @@
+{
+  "name": "widget_project",
+  "version": "0.0.1",
+  "description": "Виджет AmoCRM с автоматизицей gulp",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "amocrm",
+    "widget",
+    "gulp"
+  ],
+  "author": "Gleb Varenov @ cmdf5.ru",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
