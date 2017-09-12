@@ -1,5 +1,9 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
+const zip = require('gulp-zip');
 
 gulp.task('default', function() {
-  // place code for your default task here
+    // берём все файлы и запаковываем
+    gulp.src('src/**')
+        .pipe(zip('widget.zip'))
+        .pipe(gulp.dest('build'))
 });
