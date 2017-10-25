@@ -1,0 +1,13 @@
+{
+    "development": {
+        "widget_code": "devcode",
+        "widget_secret_key": "devkey",
+        "debug": true
+    },
+
+    "production": {
+        "widget_code": "prodcode",
+        "widget_secret_key": "prodkey",
+        "debug": false
+    }
+}
