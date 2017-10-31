@@ -5,15 +5,20 @@ const bump = require('gulp-bump');
 const template = require('gulp-template');
 const merge2 = require('merge2');
 
+/**
+ * Сюда будет загружена конфигурация из файла
+ * config.json, выбранная на основании переменной
+ * окружения NODE_ENV
+ */
 let config;
 
 /**
  * Поднимаем версию виджета в манифесте
  */
 gulp.task('bump', function () {
-    return gulp.src('./src/manifest.json')
+    return gulp.src('./widget-src/manifest.json')
         .pipe(bump({key: {widget: 'version'}}))
-        .pipe(gulp.dest('./src/'));
+        .pipe(gulp.dest('./widget-src/'));
 });
 
 /**
@@ -22,14 +27,14 @@ gulp.task('bump', function () {
 gulp.task('build', ['config'], function () {
 
     // в манифест подставляем значения из конфигурации
-    let manifest = gulp.src('src/manifest.json')
+    let manifest = gulp.src('./widget-src/manifest.json')
         .pipe(template({
             widget_code: config.widget_code,
             widget_secret_key: config.widget_secret_key,
         }));
 
     // Все остальные файлы (кроме манифеста) - просто копируем как есть
-    let other = gulp.src(['src/**', '!src/manifest.json']);
+    let other = gulp.src(['./widget-src/**', '!./widget-src/manifest.json']);
 
     // Собираем обработанные файлы в один поток, зипуем и сохраняем
     return merge2(manifest, other)
@@ -37,6 +42,10 @@ gulp.task('build', ['config'], function () {
         .pipe(gulp.dest('./build'));
 });
 
+/**
+ * сперва запускаем bump, затем build.
+ * Эта задача завершается, когда завершается build
+ */
 gulp.task('bump-build', function (done) {
     return runSequence('bump', 'build', done);
 });
@@ -45,10 +54,11 @@ gulp.task('bump-build', function (done) {
  * Выбираем конфигурацию сборки из config.json
  */
 gulp.task('config', function (done) {
+    let env = process.env.NODE_ENV === undefined ? "development" : process.env.NODE_ENV;
     let configfile = require('./config.json');
-    if (configfile[process.env.NODE_ENV] === undefined) {
-        throw "no config can be loaded for " + process.env.NODE_ENV;
+    if (configfile[env] === undefined) {
+        throw "no config can be loaded for " + env;
     }
-    config = configfile[process.env.NODE_ENV];
+    config = configfile[env];
     done();
 });

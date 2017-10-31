@@ -1,11 +1,13 @@
 {
   "name": "widget_project",
-  "version": "0.6.0",
-  "description": "Виджет AmoCRM с автоматизицей сборки gulp",
+  "version": "0.7.3",
+  "description": "Заготовка для виджета AmoCRM с автоматизицей сборки gulp",
   "main": "script.js",
   "scripts": {
-    "prod": "cross-env NODE_ENV=production gulp build",
-    "dev": "cross-env NODE_ENV=development gulp bump-build",
+    "prod": "npm run production",
+    "dev": "npm run development",
+    "production": "cross-env NODE_ENV=production gulp build",
+    "development": "cross-env NODE_ENV=development gulp bump-build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -14,9 +16,9 @@
     "gulp"
   ],
   "author": "Gleb Varenov @ cmdf5.ru",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "cross-env": "^5.1.0",
+    "cross-env": "^5.1.1",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.8.0",
     "gulp-template": "^4.0.0",
